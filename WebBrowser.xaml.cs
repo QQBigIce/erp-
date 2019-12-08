@@ -37,7 +37,7 @@ namespace AutoWrite
                 ;
             }
             document = (HtmlDocument)this.browser.Document;
-
+            // 当文档对象不为空
             if (document != null)
             {
                 //document.GetElementById("username").InnerHtml("sj");

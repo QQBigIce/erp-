@@ -18,25 +18,24 @@ using System.Windows.Forms;
 namespace AutoWrite
 {
     /// <summary>
-    /// WebBrowser.xaml 的交互逻辑
+    /// WebBrowserPage.xaml 的交互逻辑
     /// </summary>
-    public partial class WebBrowser : Page
+    public partial class WebBrowserPage : Page
     {
-        public WebBrowser()
+        public WebBrowserPage()
         {
             InitializeComponent();
-            this.loadForm();
-
+            
         }
-        private void loadForm()
+
+        public System.Windows.Controls.WebBrowser Browser { get => wbrowser; set => wbrowser = value; }
+
+        public void loadForm(string url)
         {
-            this.browser.Navigate("http://60.191.121.74:85/SYSN/view/init/login.ashx?id2=20");
+            this.wbrowser.Navigate(url);
             HtmlDocument document = null;
-            while (!this.browser.IsLoaded)
-            {
-                ;
-            }
-            document = (HtmlDocument)this.browser.Document;
+            
+            document = (HtmlDocument)this.wbrowser.Document;
             // 当文档对象不为空
             if (document != null)
             {

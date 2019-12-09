@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,18 +46,33 @@ namespace AutoWrite
                 var file = openFileDialog.FileName;
                 this.fileText.Text = file;
             }
-            this.doExcel = new DoExcel(this.fileText.Text, this.col.Text.ToCharArray()[0], Convert.ToInt32(this.row.Text));
+            
         }
 
 
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            this.doExcel = new DoExcel(this.fileText.Text, this.col.Text.ToCharArray()[0], Convert.ToInt32(this.row.Text));
             this.doExcel.FormLoad();
             foreach (var item in this.doExcel.Datas)
             {
                 this.@out.AppendText(item.pid + " + " + item.num + "\n");
             }
+            Thread t1 = new Thread(run);
+            t1.Start();
+            
+        }
+
+        private void run()
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                WebBroswerWindow wbw = new WebBroswerWindow();
+                wbw.Show();
+                wbw.loadForm("http://www.baidu.com");
+            }));
+            
         }
     }
 }

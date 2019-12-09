@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Forms;
+using mshtml;
 
 
 namespace AutoWrite
@@ -30,18 +30,15 @@ namespace AutoWrite
         }
         private void loadForm()
         {
-            this.browser.Navigate("http://60.191.121.74:85/SYSN/view/init/login.ashx?id2=20");
-            HtmlDocument document = null;
-            while (!this.browser.IsLoaded)
-            {
-                ;
-            }
-            document = (HtmlDocument)this.browser.Document;
-            // 当文档对象不为空
-            if (document != null)
-            {
-                //document.GetElementById("username").InnerHtml("sj");
-            }
+            this.browser.Navigate("https://how2j.cn/tmall/forecategory?cid=72&sort=all");
+            browser.LoadCompleted += Browser_LoadCompleted;
+        }
+
+        private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
+        {
+            //throw new NotImplementedException();
+            IHTMLDocument2 doc = (IHTMLDocument2)browser.Document;
+            doc.all.item("logo").click();
         }
     }
 }

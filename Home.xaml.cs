@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AutoWrite.contral;
+using System.Threading;
+
 
 namespace AutoWrite
 {
@@ -45,18 +47,24 @@ namespace AutoWrite
                 var file = openFileDialog.FileName;
                 this.fileText.Text = file;
             }
-            this.doExcel = new DoExcel(this.fileText.Text, this.col.Text.ToCharArray()[0], Convert.ToInt32(this.row.Text));
+            
         }
 
 
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
+            this.doExcel = new DoExcel(this.fileText.Text, this.col.Text.ToCharArray()[0], Convert.ToInt32(this.row.Text));
             this.doExcel.FormLoad();
             foreach (var item in this.doExcel.Datas)
             {
                 this.@out.AppendText(item.pid + " + " + item.num + "\n");
             }
+            Browser bw = new Browser();
+            bw.Show();
+            Thread.Sleep(500);
+            bw.loadForm();
+            
         }
     }
 }

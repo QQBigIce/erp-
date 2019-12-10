@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AutoWrite.contral;
+using System.Threading;
+
 
 namespace AutoWrite
 {
@@ -59,19 +60,10 @@ namespace AutoWrite
             {
                 this.@out.AppendText(item.pid + " + " + item.num + "\n");
             }
-            Thread t1 = new Thread(run);
-            t1.Start();
-            
-        }
-
-        private void run()
-        {
-            Dispatcher.Invoke((Action)(() =>
-            {
-                WebBroswerWindow wbw = new WebBroswerWindow();
-                wbw.Show();
-                wbw.loadForm("http://www.baidu.com");
-            }));
+            Browser bw = new Browser();
+            bw.Show();
+            Thread.Sleep(500);
+            bw.loadForm();
             
         }
     }

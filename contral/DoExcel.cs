@@ -6,63 +6,48 @@ using System.Runtime.Serialization;
 
 namespace AutoWrite.contral
 {
-    struct Data
-    {
 
-        public string pid;
-        public string num;
-
-        public Data(string pid, string num)
-        {
-            this.pid = pid;
-            this.num = num;
-        }
-    }
     class DoExcel
     {
-        private string fileName;
-        private int col;
-        private int row;
-        private List<Data> datas;
-
         public DoExcel()
         {
+
         }
 
         public DoExcel(char col, int row)
         {
-            this.col = (int)(char.ToUpper(col)) - 64;
-            this.row = row;
+            this.Col = (int)(char.ToUpper(col)) - 64;
+            this.Row = row;
 
 
         }
 
         public DoExcel(string fileName, char col, int row) : this(col, row)
         {
-            this.fileName = fileName;
+            this.FileName = fileName;
         }
 
-        public int Col { get => col; set => col = value; }
-        public int Row { get => row; set => row = value; }
-        public string FileName { get => fileName; set => fileName = value; }
-        internal List<Data> Datas { get => datas; set => datas = value; }
+        public int Col { get; set; }
+        public int Row { get; set; }
+        public string FileName { get; set; }
+        internal Dictionary<string, string> Datas { get; set; }
 
         public void FormLoad()
         {
-            FileInfo file = new FileInfo(fileName);
+            FileInfo file = new FileInfo(FileName);
             using (ExcelPackage excelPackage = new ExcelPackage(file))
             {
-                this.Datas = new List<Data>();
+                Dictionary<string, string> dict = new Dictionary<string, string>();
                 ExcelWorksheet ws = excelPackage.Workbook.Worksheets[1];
-                for (int i = this.row; ws.Cells[i, col].Value != null; i++)
+                for (int i = this.Row; i < ws.AutoFilterAddress.End.Row; i++)
                 {
-                    if (ws.Cells[i, col + 1].Value != null) 
+                    if (ws.Cells[i, Col + 1].Value != null) 
                     {
-                        Data data = new Data(ws.Cells[i, col + 1].Value.ToString(), ws.Cells[i, col + 5].Value.ToString());
-                        this.Datas.Add(data);
-                    }
-                        
-                        
+                        string k = ws.Cells[i, Col + 1].Value.ToString();
+                        string v = ws.Cells[i, Col + 5].Value.ToString();
+                        //Data data = new Data(ws.Cells[i, Col + 1].Value.ToString(), ws.Cells[i, Col + 5].Value.ToString());
+                        this.Datas[k] = v;
+                    }     
                 }
                 
             }

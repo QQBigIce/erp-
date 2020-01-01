@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AutoWrite.contral;
 using CefSharp;
+using CefSharp.Wpf;
 using mshtml;
 
 namespace AutoWrite
@@ -26,8 +27,14 @@ namespace AutoWrite
         public Browser()
         {
             InitializeComponent();
-            bw1.LifeSpanHandler = new DoExcel() as ILifeSpanHandler;
+            bw1.LifeSpanHandler = new DoERP();
+            ChromiumWebBrowser = this.bw1;
+            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            bw1.RegisterJsObject("bound", new BoundObject(this), null);
         }
+
+        public static ChromiumWebBrowser ChromiumWebBrowser { get; set; }
+
         public void LoadForm()
         {
             //bw1.LoadCompleted += Browser_LoadCompleted;

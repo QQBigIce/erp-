@@ -8,15 +8,17 @@
         Title="ERP自动录入" Height="450" Width="800" MinHeight="450" MinWidth="800"  WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip">
     <Grid>
         <DockPanel Grid.Row="0">
-            <TabControl DockPanel.Dock="Top" >
+            <TabControl DockPanel.Dock="Top"  >
                 <TabItem Header="输入">
                     <Frame Source="Home.xaml" />
                 </TabItem>
                 <TabItem Header="浏览器">
-                    <Frame Source="Browser.xaml" />
+                    <Frame Source="Browser.xaml" x:Name="bw" />
+
                 </TabItem>
             </TabControl>
         </DockPanel>
+        <Button Content="开始" DockPanel.Dock="Top" Margin="93,1,657,392" Click="StartButton_Click" FontSize="11" />
     </Grid>
 
 

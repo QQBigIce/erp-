@@ -12,65 +12,42 @@ namespace AutoWrite.contral
 {
     public class DoERP : ILifeSpanHandler
     {
+        /// < 摘要 >
+        ///在创建弹出窗口之前调用。
+        /// </ 摘要 >
+        /// < param  name = “ browserControl ” > < 请参见 cref = “ IWebBrowser ” />控制此请求。</ param >
+        /// < param  name = “ browser ” >启动此弹出窗口的浏览器实例。</ param >
+        /// < param  name = “ frame ” >启动此弹出窗口的HTML框架。</ param >
+        /// < 参数 名称 = “ targetUrl ” >弹出内容的URL。（可能为空/空）</ param >
+        /// < 参数 名称 = “ targetFrameName ” >弹出窗口的名称。（可能为空/空）</ param >
+        /// < param  name = “ targetDisposition ” >该值指示用户打算在哪里
+        ///打开弹出窗口（例如当前选项卡，新选项卡等）</ param >
+        /// < param  name = “ userGesture ” >如果通过显式用户手势打开弹出窗口，则该值为true
+        ///（例如，单击链接）；如果弹出窗口是自动打开的（例如，通过DomContentLoaded事件），则返回false。</ param >
+        /// < param  name = “ windowInfo ” >窗口信息</ param >
+        /// < 参数 名 = “ noJavascriptAccess ” >值指示新的浏览器窗口是否应可编写脚本
+        ///并与源浏览器相同。</ param >
+        /// < param  name = “ newBrowser ” > EXPERIMENTAL-一个新创建的浏览器，将托管弹出窗口</ param >
+        /// < 返回 >要取消弹出窗口回到真正的创造否则返回false。</ 回报 >
+        /// < 备注 >
+        /// CEF文档：
+        /// 
+        ///在创建新的弹出窗口之前在IO线程上调用。|浏览器|
+        ///和| frame | 参数代表弹出请求的来源。的
+        /// | target_url | 和| target_frame_name | 如果没有值则为空
+        ///与请求一起指定。| popupFeatures | 结构包含
+        ///有关请求的弹出窗口的信息。为了允许创建
+        ///弹出窗口可以选择修改| windowInfo |，| client |，| settings | 和
+        /// | no_javascript_access | 并返回false。取消创建弹出窗口
+        ///窗口返回true。|客户端| 和|设置| 值将默认为
+        ///源浏览器的值。| no_javascript_access | 值指示是否
+        ///新的浏览器窗口应可编写脚本，并且与
+        ///源浏览器。
         bool ILifeSpanHandler.OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser)
         {
-            //Set newBrowser to null unless your attempting to host the popup in a new instance of ChromiumWebBrowser
             newBrowser = null;
-
-            var chromiumWebBrowser = (ChromiumWebBrowser)browserControl;
-
-            ChromiumWebBrowser chromiumBrowser = null;
-
-            var windowX = (windowInfo.X == int.MinValue) ? double.NaN : windowInfo.X;
-            var windowY = (windowInfo.Y == int.MinValue) ? double.NaN : windowInfo.Y;
-            var windowWidth = (windowInfo.Width == int.MinValue) ? double.NaN : windowInfo.Width;
-            var windowHeight = (windowInfo.Height == int.MinValue) ? double.NaN : windowInfo.Height;
-
-            chromiumWebBrowser.Dispatcher.Invoke(() =>
-            {
-                var owner = Window.GetWindow(chromiumWebBrowser);
-                chromiumBrowser = new ChromiumWebBrowser
-                {
-                    Address = targetUrl,
-                };
-
-                chromiumBrowser.SetAsPopup();
-                chromiumBrowser.LifeSpanHandler = this;
-
-                var popup = new Window
-                {
-                    Left = windowX,
-                    Top = windowY,
-                    Width = windowWidth,
-                    Height = windowHeight,
-                    Content = chromiumBrowser,
-                    Owner = owner,
-                    Title = targetFrameName
-                };
-
-                var windowInteropHelper = new WindowInteropHelper(popup);
-                //Create the handle Window handle (In WPF there's only one handle per window, not per control)
-                var handle = windowInteropHelper.EnsureHandle();
-
-                //The parentHandle value will be used to identify monitor info and to act as the parent window for dialogs,
-                //context menus, etc. If parentHandle is not provided then the main screen monitor will be used and some
-                //functionality that requires a parent window may not function correctly.
-                windowInfo.SetAsWindowless(handle);
-
-                popup.Closed += (o, e) =>
-                {
-                    var w = o as Window;
-                    if (w != null && w.Content is IWebBrowser)
-                    {
-                        (w.Content as IWebBrowser).Dispose();
-                        w.Content = null;
-                    }
-                };
-            });
-
-            newBrowser = chromiumBrowser;
-
-            return false;
+            browserControl.Load(targetUrl);
+            return true;
         }
 
         void ILifeSpanHandler.OnAfterCreated(IWebBrowser browserControl, IBrowser browser)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CefSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,13 @@ namespace AutoWrite
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            Browser.ChromiumWebBrowser.ExecuteScriptAsync("var i = bound.openFile();");
+            Browser.ChromiumWebBrowser.ExecuteScriptAsync("alert(i);");
         }
     }
 }

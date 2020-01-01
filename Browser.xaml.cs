@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AutoWrite.contral;
 using CefSharp;
 using mshtml;
 
@@ -20,13 +21,14 @@ namespace AutoWrite
     /// <summary>
     /// Browser.xaml 的交互逻辑
     /// </summary>
-    public partial class Browser : Window
+    public partial class Browser : Page
     {
         public Browser()
         {
             InitializeComponent();
+            bw1.LifeSpanHandler = new DoExcel() as ILifeSpanHandler;
         }
-        public void loadForm()
+        public void LoadForm()
         {
             //bw1.LoadCompleted += Browser_LoadCompleted;
             string a = "$(function () {f('https://cdn.bootcss.com/tesseract.js/2.0.0-alpha.2/tesseract.min.js');$('#username').val('123');$('#password').val('888888');var img = $('#codes').attr('src');Tesseract.recognize(img, {classify_bln_numeric_mode: 1}).then(function(result) {alert(result);});});function f(s){ var script = document.createElement('script');script.type = 'text/javascript';script.src = s;document.getElementsByTagName('head')[0].appendChild(script);}";

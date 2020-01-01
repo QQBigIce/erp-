@@ -24,20 +24,19 @@ namespace AutoWrite
     {
         public WebBrowser()
         {
-            InitializeComponent();
-            this.loadForm();
+            this.LoadForm();
 
         }
-        private void loadForm()
+        private void LoadForm()
         {
-            this.browser.Navigate("https://how2j.cn/tmall/forecategory?cid=72&sort=all");
-            browser.LoadCompleted += Browser_LoadCompleted;
+            this.wbbrowser.Navigate("https://how2j.cn/tmall/forecategory?cid=72&sort=all");
+            wbbrowser.LoadCompleted += Browser_LoadCompleted;
         }
 
         private void Browser_LoadCompleted(object sender, NavigationEventArgs e)
         {
             //throw new NotImplementedException();
-            IHTMLDocument2 doc = (IHTMLDocument2)browser.Document;
+            IHTMLDocument2 doc = (IHTMLDocument2)wbbrowser.Document;
             doc.all.item("logo").click();
         }
     }

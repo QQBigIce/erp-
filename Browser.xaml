@@ -1,13 +1,13 @@
-﻿<Window x:Class="AutoWrite.Browser"
+﻿<Page x:Class="AutoWrite.Browser"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoWrite"
-        xmlns:cefSharpWpf ="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        xmlns:cefSharpWpf="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
         mc:Ignorable="d"
-        Title="Browser" Height="450" Width="800">
+        Title="Browser" MinHeight="450" MinWidth="800">
     <Grid>
-        <cefSharpWpf:ChromiumWebBrowser Address="http://60.191.121.74:85/SYSN/view/init/login.ashx?id2=20" x:Name="bw1" />
+      <cefSharpWpf:ChromiumWebBrowser Address="http://60.191.121.74:85/SYSN/view/init/login.ashx?id2=20" x:Name="bw1" />
     </Grid>
-</Window>
+</Page>

@@ -54,6 +54,7 @@
                     </ListBox>
 
                 </Grid>
+                <Button Content="Button" Canvas.Left="33" Canvas.Top="139" Width="75" Click="Button_Click"/>
             </Canvas>
         </Viewbox>
 

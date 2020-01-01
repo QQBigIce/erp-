@@ -13,7 +13,7 @@
                     <Frame Source="Home.xaml" />
                 </TabItem>
                 <TabItem Header="浏览器">
-                    <Frame Source="WebBrowser.xaml" />
+                    <Frame Source="Browser.xaml" />
                 </TabItem>
             </TabControl>
         </DockPanel>

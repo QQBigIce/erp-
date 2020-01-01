@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AutoWrite.contral;
 using System.Threading;
-
+using CefSharp.Wpf;
 
 namespace AutoWrite
 {
@@ -61,9 +61,13 @@ namespace AutoWrite
                 this.@out.AppendText(item.pid + " + " + item.num + "\n");
             }
             Browser bw = new Browser();
-            bw.Show();
+            
             Thread.Sleep(500);
-            bw.loadForm();
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             
         }
     }

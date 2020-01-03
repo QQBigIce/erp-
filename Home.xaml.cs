@@ -24,22 +24,15 @@ namespace AutoWrite
     /// </summary>
     public partial class Home : Page
     {
-        [DllImport("coredll.dll", EntryPoint = "FindWindow")]
-        private extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
-        [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        private static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-        [DllImport("user32.dll", EntryPoint = "FindWindow")]
-        private static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+        public static TextBox Output { get; set; }
+
 
         private DoExcel doExcel;
         public Home()
         {
+            
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
+            Output = this.outBox;
         }
 
 
@@ -64,14 +57,10 @@ namespace AutoWrite
         {
             this.doExcel = new DoExcel(this.fileText.Text, this.col.Text.ToCharArray()[0], Convert.ToInt32(this.row.Text));
             this.doExcel.FormLoad();
-            foreach (var item in this.doExcel.Datas)
+            foreach (KeyValuePair<string, string> item in DoExcel.Datas)
             {
-                this.@out.AppendText(item.pid + " + " + item.num + "\n");
+                this.outBox.AppendText(item.Key + " = " + item.Value + "\n");
             }
-            Browser bw = new Browser();
-
-            Thread.Sleep(500);
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -31,6 +31,7 @@
                         <RowDefinition MinHeight="30"/>
                         <RowDefinition MinHeight="30"/>
                         <RowDefinition MinHeight="30"/>
+                        <RowDefinition MinHeight="30"/>
                         <RowDefinition MinHeight="100"/>
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
@@ -38,23 +39,25 @@
                     <TextBox Grid.Row="0" Grid.Column="1" x:Name="row" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="6" VerticalAlignment="Top" MinWidth="39" Height="20" FontSize="14" Width="39" />
 
                     <TextBlock Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="从EXCEL中第几列读取:" FontSize="16" Height="20" Width="163" Grid.ColumnSpan="2" />
-                    <TextBox Grid.Row="1" Grid.Column="1"  x:Name="col" HorizontalAlignment="Left" TextWrapping="Wrap" Text="A" VerticalAlignment="Top" TextChanged="TextBox_TextChanged" MinWidth="39" Height="20" RenderTransformOrigin="1.333,0.913" FontSize="14" Width="39"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"  x:Name="col" HorizontalAlignment="Left" TextWrapping="Wrap" Text="A" VerticalAlignment="Top" MinWidth="39" Height="20" RenderTransformOrigin="1.333,0.913" FontSize="14" Width="39"/>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="选择打开的文件:" Name="fileName" FontSize="16"/>
-                    <Button Grid.Row="2" Grid.Column="2"  Content="选择" FontSize="14" Click="SearchButton_Click"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="D:\q.xlsx" Visibility="Visible" TextWrapping="Wrap" Name ="fileText" MinWidth="39" FontSize="16"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ERP中已有行数:" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Height="20" Width="163" Grid.ColumnSpan="2"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="hadRow" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="0" VerticalAlignment="Top" MinWidth="39" Height="20" FontSize="14" Width="39" />
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="选择打开的文件:" Name="fileName" FontSize="16"/>
+                    <Button Grid.Row="3" Grid.Column="2"  Content="选择" FontSize="14" Click="SearchButton_Click"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="D:\q.xlsx" Visibility="Visible" TextWrapping="Wrap" Name ="fileText" MinWidth="39" FontSize="16"/>
 
-                    <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="下面是未搜索到的编号:" FontSize="16" Width="180" Height="20" Margin="0,0,0,0"  />
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="out"  HorizontalAlignment="Left" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" RenderTransformOrigin="0.5,0.492" AcceptsReturn="True" Margin="0,1,0,0" Grid.RowSpan="2"/>
+                    <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Text="下面是未搜索到的编号:" FontSize="16" Width="180" Height="20" Margin="0,0,0,0"  />
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="outBox"  HorizontalAlignment="Left" Height="200" TextWrapping="Wrap" VerticalAlignment="Top" Width="330" RenderTransformOrigin="0.5,0.492" AcceptsReturn="True" Margin="0,1,0,0" Grid.RowSpan="2"/>
 
 
-                    <ListBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="54" Margin="138,181,0,0">
+                    <ListBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Height="52" VerticalAlignment="Top" Width="54" Margin="138,181,0,0">
                         <Button Content="开始" HorizontalAlignment="Left" VerticalAlignment="Top" Width="39" Height="20" FontSize="14" Click="StartButton_Click"/>
                         <Button Content="停止" Width="39" Height="20" FontSize="14"/>
                     </ListBox>
 
                 </Grid>
-                <Button Content="Button" Canvas.Left="33" Canvas.Top="139" Width="75" Click="Button_Click"/>
             </Canvas>
         </Viewbox>
 

@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace AutoWrite.contral
 {
 
-    class DoExcel
+    public class DoExcel
     {
         public DoExcel()
         {
@@ -30,14 +30,14 @@ namespace AutoWrite.contral
         public int Col { get; set; }
         public int Row { get; set; }
         public string FileName { get; set; }
-        internal Dictionary<string, string> Datas { get; set; }
+        public static Dictionary<string, string> Datas { get; set; }
 
         public void FormLoad()
         {
             FileInfo file = new FileInfo(FileName);
+            Dictionary<string, string> dict = new Dictionary<string, string>();
             using (ExcelPackage excelPackage = new ExcelPackage(file))
             {
-                Dictionary<string, string> dict = new Dictionary<string, string>();
                 ExcelWorksheet ws = excelPackage.Workbook.Worksheets[1];
                 for (int i = this.Row; i < ws.AutoFilterAddress.End.Row; i++)
                 {
@@ -46,11 +46,19 @@ namespace AutoWrite.contral
                         string k = ws.Cells[i, Col + 1].Value.ToString();
                         string v = ws.Cells[i, Col + 5].Value.ToString();
                         //Data data = new Data(ws.Cells[i, Col + 1].Value.ToString(), ws.Cells[i, Col + 5].Value.ToString());
-                        this.Datas[k] = v;
+                        if (dict.ContainsKey(k))
+                        {
+                            dict[k] = (Convert.ToInt32(dict[k]) + Convert.ToInt32(v)).ToString();
+                        }
+                        else
+                        {
+                            dict.Add(k, v);
+                        }
                     }     
                 }
                 
             }
+            Datas = dict;
         }
     }
 }

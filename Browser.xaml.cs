@@ -29,8 +29,16 @@ namespace AutoWrite
             InitializeComponent();
             bw1.LifeSpanHandler = new DoERP();
             ChromiumWebBrowser = this.bw1;
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-            bw1.RegisterJsObject("bound", new BoundObject(this), null);
+            //CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+            CefSharpSettings.WcfEnabled = true;
+            bw1.JavascriptObjectRepository.ResolveObject += (s, eve) =>
+            {
+                var repo = eve.ObjectRepository;
+                if (eve.ObjectName == "bound")
+                {
+                    repo.Register("bound", new BoundObject(), isAsync: false, options: BindingOptions.DefaultBinder);
+                }
+            };
         }
 
         public static ChromiumWebBrowser ChromiumWebBrowser { get; set; }
